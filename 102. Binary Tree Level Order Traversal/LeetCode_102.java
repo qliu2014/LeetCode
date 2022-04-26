@@ -1,25 +1,49 @@
 /*
 
-Given the roots of two binary trees p and q, write a function to check if they are the same or not.
-
-Two binary trees are considered the same if they are structurally identical, and the nodes have the same value.
+Given the root of a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).
 
 */
 
-class LeetCode_100 {
 
-    public boolean isSameTree(TreeNode p, TreeNode q) {
-        // p and q are both null
-        if (p == null && q == null) return true;
-        
-        // one of p and q is null -> meaning structurally not identical
-        if (p == null || q == null) return false;
-        
-        // if same structure, compare value at the node
-        if (p.val != q.val) return false;
-        
-        // if value is the same, recursively check its child nodes and other descendants
-        // both left sub tree and right sub tree must satisfy
-        return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+
+class LeetCode_102 {
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        //Outer list is arraylist because we need to specify its index
+        List<List<Integer>> ans_array = new ArrayList<List<Integer>>(); 
+        DFS(root, 0, ans_array);
+        return ans_array;
+    }
+    
+    public void DFS(TreeNode root, int depth, List<List<Integer>> ans_array) {
+        if (root == null) return;
+        //the outer array needs to create (enough) new empty arraylist to host new elements
+        while (ans_array.size() <= depth) ans_array.add(new ArrayList<Integer>());
+        ans_array.get(depth).add(root.val);
+        DFS(root.left, depth + 1, ans_array);
+        DFS(root.right, depth + 1, ans_array);
     }
 }
+
+
+
+/*
+ Example
+ 
+    3
+   / \
+  9   20
+     /  \
+    15   7
+    
+    Preorder DFS:
+    
+    root         depth          ans_array
+     3              0               [[3]]
+     9              1               [[3], [9]]
+     
+     20             1               [[3], [9, 20]]
+     15             2               [[3], [9, 20], [15]] 
+     7              2               [[3], [9, 20], [15, 7]]          
+     null           3               return
+     
+*/
