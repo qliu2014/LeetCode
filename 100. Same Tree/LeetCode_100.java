@@ -1,26 +1,25 @@
-import java.util.*;
+/*
 
-public class LeetCode_100 {
+Given the roots of two binary trees p and q, write a function to check if they are the same or not.
 
-	public static void main(String[] args) {
+Two binary trees are considered the same if they are structurally identical, and the nodes have the same value.
 
-		//call isSameTree()
+*/
 
-		System.out.println(res.toString());
+class LeetCode_100 {
 
-	}
-
-	public boolean isSameTree(TreeNode p, TreeNode q) {
-    // p and q are both null
-    if (p == null && q == null) return true;
-    // one of p and q is null
-    if (q == null || p == null) return false;
-    if (p.val != q.val) return false;
-    return isSameTree(p.right, q.right) &&
-            isSameTree(p.left, q.left);
-  }
-
-
-
-
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        // p and q are both null
+        if (p == null && q == null) return true;
+        
+        // one of p and q is null -> meaning structurally not identical
+        if (p == null || q == null) return false;
+        
+        // if same structure, compare value at the node
+        if (p.val != q.val) return false;
+        
+        // if value is the same, recursively check its child nodes and other descendants
+        // both left sub tree and right sub tree must satisfy
+        return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+    }
 }
